@@ -201,10 +201,10 @@ async function copyFile() {
 
 只需要提问，就可以知道自己想了解的事情了，
 
-我们还可以详情了解一下如下 api :
+我们还可以详细了解一下其他 api :
 
 vscode.Uri
 
 vscode.window
 
-等
+
