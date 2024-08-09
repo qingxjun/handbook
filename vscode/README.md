@@ -42,4 +42,6 @@ vscode插件开发助手
 
 然后就进入提问环节。
 
-[如何实现 复制 功能](./copy.md)
+[实现 复制 功能](./copy.md)
+
+[实现 生成模板 功能](./generate-template.md)
