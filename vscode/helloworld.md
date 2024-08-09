@@ -1,5 +1,7 @@
 [返回首页](/README.md)
 
+[返回上一页](./README.md)
+
 # hello world
 
 快速入门，实现一个最基本的插件 —— hello world

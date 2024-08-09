@@ -1,5 +1,7 @@
 [返回首页](/README.md)
 
+[返回上一页](./README.md)
+
 # generate template 生成模板
 
 完成上一步的复制功能之后，我们接下来实现一下生成模板功能
