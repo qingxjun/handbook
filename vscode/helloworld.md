@@ -1,6 +1,6 @@
-# vscode extensions
-
 [返回首页](/README.md)
+
+# hello world
 
 快速入门，实现一个最基本的插件 —— hello world
 
@@ -24,4 +24,4 @@
 },
 ```
 
-将 vscode 值修改为不高于自己机子的 vscode 版本，重新运行一下，就可以了。
+将 vscode 值修改为不高于自己机子的 vscode 版本，重新运行一下，就能看到效果了。
