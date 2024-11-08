@@ -31,6 +31,6 @@
 
 然后在 layout 内部嵌套了一个 layout，完成了顶部导航栏和主体内容的布局。
 
-[研究一下布局组件](https://www.naiveui.com/zh-CN/os-theme/components/layout)
+[研究一下布局组件](https://www.naiveui.com/zh-CN/os-theme/components/layout?_blank)
 
 
