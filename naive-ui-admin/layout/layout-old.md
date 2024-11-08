@@ -34,3 +34,35 @@
 [研究一下布局组件](https://www.naiveui.com/zh-CN/os-theme/components/layout?_blank)
 
 
+整体结构已经搞清楚了，接下来看一下具体的细节。
+
+#### 左侧菜单
+
+左侧菜单被一个 layout-sider 包裹。
+
+```vue
+<template>
+  <n-layout class="layout" :position="fixedMenu" has-sider>
+    <n-layout-sider
+      v-if="
+        !isMobile && isMixMenuNoneSub && (navMode === 'vertical' || navMode === 'horizontal-mix')
+      "
+      show-trigger="bar"
+      @collapse="collapsed = true"
+      :position="fixedMenu"
+      @expand="collapsed = false"
+      :collapsed="collapsed"
+      collapse-mode="width"
+      :collapsed-width="64"
+      :width="leftMenuWidth"
+      :native-scrollbar="false"
+      :inverted="inverted"
+      class="layout-sider"
+    >
+      <Logo :collapsed="collapsed" />
+      <AsideMenu v-model:collapsed="collapsed" v-model:location="getMenuLocation" />
+    </n-layout-sider>
+    <!-- ... 省略部分代码 -->
+  </n-layout>
+</template>
+```
