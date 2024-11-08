@@ -6,7 +6,7 @@
 
 ## 小枝丫：中台前端框架
 
-[观察一下](./naive-ui-admin/README.md) Naive UI Admin
+[看看](./naive-ui-admin/README.md) Naive UI Admin
 
 ## 细枝：小技巧
 

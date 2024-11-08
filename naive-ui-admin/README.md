@@ -1,4 +1,5 @@
-
+<!-- @format -->
+[返回](/README.md)
 
 # [Naive UI Admin](https://docs.naiveadmin.com/)
 
@@ -16,15 +17,10 @@
 
 接下来就是记录自己学习这个中台前端框架的一些笔记。
 
+#### 启动本地开发环境
 
-## 开始
+[查看详情](./start.md)
 
-```bash
-# 安装依赖
-pnpm install
+#### 布局
 
-# 启动服务
-pnpm dev
-```
-
-
+[查看详情](./layout/README.md)
