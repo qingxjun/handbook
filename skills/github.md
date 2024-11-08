@@ -25,3 +25,4 @@ github.com.ipaddress.com/#ipinfo
 151.101.1.194 github.global.ssl.fastly.net
 ```
 
+由于 ip 地址是一直在变的，我们可以通过访问 https://www.ipaddress.com/ 取得最新的 ip 地址。
