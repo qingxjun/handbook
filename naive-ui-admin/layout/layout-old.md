@@ -33,7 +33,6 @@
 
 [研究一下布局组件](https://www.naiveui.com/zh-CN/os-theme/components/layout?_blank)
 
-
 整体结构已经搞清楚了，接下来看一下具体的细节。
 
 #### 左侧菜单
@@ -45,7 +44,9 @@
   <n-layout class="layout" :position="fixedMenu" has-sider>
     <n-layout-sider
       v-if="
-        !isMobile && isMixMenuNoneSub && (navMode === 'vertical' || navMode === 'horizontal-mix')
+        !isMobile &&
+        isMixMenuNoneSub &&
+        (navMode === 'vertical' || navMode === 'horizontal-mix')
       "
       show-trigger="bar"
       @collapse="collapsed = true"
@@ -60,9 +61,18 @@
       class="layout-sider"
     >
       <Logo :collapsed="collapsed" />
-      <AsideMenu v-model:collapsed="collapsed" v-model:location="getMenuLocation" />
+      <AsideMenu
+        v-model:collapsed="collapsed"
+        v-model:location="getMenuLocation"
+      />
     </n-layout-sider>
     <!-- ... 省略部分代码 -->
   </n-layout>
 </template>
 ```
+
+如上代码所示，我们给组件 layout-sider 传入了大量参数。
+
+<a target="_blank" href="https://www.naiveui.com/zh-CN/os-theme/components/layout#Layout-Sider-Props">查看参数说明</a>
+
+

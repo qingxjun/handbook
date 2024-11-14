@@ -8,6 +8,10 @@
 
 [看看](./naive-ui-admin/README.md) Naive UI Admin
 
+## 小枝丫：nextjs 项目
+
+[看看](./next-admin/README.md) Next Admin 项目
+
 ## 细枝：小技巧
 
 [看看](./skills/README.md) 一些小技巧
@@ -15,3 +19,4 @@
 ## 末节：非常实用的工具
 
 [看看](./npms/README.md) 一些非常实用的工具
+
