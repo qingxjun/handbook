@@ -164,4 +164,107 @@ export class UserService {
 }
 ```
 
-接下来，通过 postman 来测试一下。
+接下来，就可以通过 postman 来测试一下接口。
+
+## 拦截器
+
+在 Nest 中，拦截器是一种强大的机制，用于在请求处理管道中插入自定义逻辑。拦截器可以在请求到达控制器之前或之后执行，允许您执行各种任务，例如日志记录、身份验证、授权、缓存等。
+
+在 Nest 中，拦截器是通过实现 `NestInterceptor` 接口来定义的。
+
+我们可以通过 `nest g interceptor response` 来创建一个拦截器，用于统一处理接口响应返回的数据格式。
+
+```ts
+import {
+  CallHandler,
+  ExecutionContext,
+  Injectable,
+  NestInterceptor,
+} from '@nestjs/common'
+import { map, Observable } from 'rxjs'
+
+@Injectable()
+export class ResponseInterceptor implements NestInterceptor {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    return next.handle().pipe(
+      map((data) => ({
+        code: 200,
+        message: 'OK',
+        data,
+      }))
+    )
+  }
+}
+```
+
+例如：
+
+通过请求接口 `/user/2` 可以获取到用户信息，数据如下格式的数据：
+
+```json
+{
+  "code": 200,
+  "message": "OK",
+  "data": {
+    "id": 2,
+    "username": "test2",
+    "password": "tess2",
+    "email": "textsss",
+    "created_at": "2024-11-18T08:28:48.000Z"
+  }
+}
+```
+
+## 过滤器
+
+在 Nest 中，过滤器是一种用于处理异常情况的机制。它们允许您捕获和处理应用程序中的错误，以提供更友好的错误响应。
+
+开箱即用，不过，与我们之前拦截器定义的数据格式不太一致，这就需要我们处理一下。
+
+我们可以通过 `nest g filter filter/allException` 来创建一个过滤器，用于统一处理接口响应返回的数据格式。
+
+```ts
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common'
+import { Response } from 'express'
+
+@Catch()
+export class AllExceptionFilter implements ExceptionFilter {
+  catch(exception: any, host: ArgumentsHost) {
+    const ctx = host.switchToHttp()
+    const response = ctx.getResponse<Response>()
+    const status =
+      exception instanceof HttpException
+        ? exception.getStatus()
+        : HttpStatus.INTERNAL_SERVER_ERROR
+    response.status(200).json({
+      code: status,
+      message: exception.message || 'Internal Error',
+      data: null,
+    })
+  }
+}
+```
+
+之后，在 `main.ts` 中引入这个过滤器。
+
+```ts
+app.useGlobalFilters(new AllExceptionFilter())
+```
+
+这样当接口出现异常时，就会返回我们定义的数据格式了。
+
+如下所示：
+
+```json
+{
+  "code": 500,
+  "message": "Duplicate entry 'test1' for key 'user.username'",
+  "data": null
+}
+```
