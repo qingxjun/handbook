@@ -16,7 +16,7 @@ Nest 在这些常见的 Node.js 框架（Express/Fastify）之上提供了一个
 
 首先，我们通过官网提供的脚手架 cli 创建好项目，安装好依赖包，然后启动项目。
 
-最后，在浏览器上访问 `http://localhost:3000/` 就可以看到返回的内容 `Hello World!` 了。
+最后，在浏览器上访问 `http://localhost:3000/` 就可以看到返回的内容 `Hello World!` 。
 
 ## 指令
 
@@ -53,7 +53,7 @@ Nest 在这些常见的 Node.js 框架（Express/Fastify）之上提供了一个
 npm install --save @nestjs/typeorm typeorm mysql2
 ```
 
-安装完成之后，就可以导入 TypeOrmModule 了。
+安装完成之后，就可以导入 TypeOrmModule。
 
 ```ts
 import { Module } from '@nestjs/common'
@@ -85,7 +85,7 @@ import { UserModule } from './modules/user/user.module'
 export class AppModule {}
 ```
 
-接下来，就可以使用存储库模式，为我们的实体类创建存储库了。
+接下来，就可以使用存储库模式，为我们的实体类创建存储库。
 
 ```ts
 import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm'
