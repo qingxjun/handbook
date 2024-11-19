@@ -8,9 +8,9 @@
 
 [看看](./naive-ui-admin/README.md) Naive UI Admin
 
-## 小枝丫：nextjs 项目
+## 小枝丫：服务器端应用框架
 
-[看看](./next-admin/README.md) Next Admin 项目
+[看看](./nestjs/README.md) Nestjs
 
 ## 细枝：小技巧
 
