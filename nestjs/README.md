@@ -41,6 +41,8 @@ Nest 在这些常见的 Node.js 框架（Express/Fastify）之上提供了一个
 
 通过 `nest g res app` 可以快速生成一个新资源。
 
+可以单个的生成，也可以使用 res 一个指令来生成一个新资源。
+
 ## 数据库
 
 我们选择 mysql 做为我们的数据库，然后使用 TypeORM 来简化我们的数据库操作。
