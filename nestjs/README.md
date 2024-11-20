@@ -320,7 +320,7 @@ export class UserModule {}
 
 只有通过模块的 exports 才能将服务导出。导出后的服务，其它模块才能使用。
 
-接下来，我们就可以需要在 AuthModule 中引入 UserModule：
+接下来，我们就可以在 AuthModule 中引入 UserModule：
 
 ```ts
 import { Module } from '@nestjs/common'
