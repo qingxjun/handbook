@@ -270,3 +270,98 @@ app.useGlobalFilters(new AllExceptionFilter())
   "data": null
 }
 ```
+
+## 登录
+
+接下来我们实现一下登录的功能。
+
+我们可以通过 `nest g res modules/auth` 来创建一个 auth 资源。
+
+先修改 UserService ：
+
+```ts
+// ... 省略部分代码
+
+@Injectable()
+export class UserService {
+  // ... 省略部分代码
+
+  findOneById(id: number) {
+    return this.userRepository.findOneBy({ id })
+  }
+
+  findOneByUsername(username: string) {
+    return this.userRepository.findOneBy({ username })
+  }
+
+  // ... 省略部分代码
+}
+```
+
+提供一个根据 username 查找用户的方法。
+
+然后修改 UserModule ，通过 exports 将 UserService 导出。
+
+```ts
+import { Module } from '@nestjs/common'
+import { UserService } from './user.service'
+import { UserController } from './user.controller'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { User } from './entities/user.entity'
+
+@Module({
+  imports: [TypeOrmModule.forFeature([User])],
+  controllers: [UserController],
+  providers: [UserService],
+  exports: [UserService],
+})
+export class UserModule {}
+```
+
+只有通过模块的 exports 才能将服务导出。导出后的服务，其它模块才能使用。
+
+接下来，我们就可以需要在 AuthModule 中引入 UserModule：
+
+```ts
+import { Module } from '@nestjs/common'
+import { AuthService } from './auth.service'
+import { AuthController } from './auth.controller'
+import { UserModule } from '../user/user.module'
+
+@Module({
+  imports: [UserModule],
+  controllers: [AuthController],
+  providers: [AuthService],
+})
+export class AuthModule {}
+```
+
+这样，在 AuthService 中就可以使用 UserService 了：
+
+```ts
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { UserService } from '../user/user.service';
+import { LoginAuthDto } from './dto/login-auth.dto';
+
+@Injectable()
+export class AuthService {
+  constructor(private userService: UserService) {}
+  async login(loginDto: LoginAuthDto) {
+    const { username, password: pass } = loginDto;
+    const user = await this.userService.findOneByUsername(username);
+    if (user?.password !== pass) {
+      throw new UnauthorizedException();
+    }
+
+    const { password, ...result } = user;
+    return result;
+  }
+}
+
+```
+
+通过接口 login 中取得的 username 参数，我们调用 userService 服务取得用户数据，
+
+然后判断密码是否一致，不一致的话，就直接抛无权限异常。
+
+
