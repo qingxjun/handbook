@@ -381,14 +381,14 @@ import { AuthController } from './auth.controller';
 
 import { UserModule } from '../user/user.module';
 import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './constants';
 
 @Module({
   imports: [
     UserModule,
-    // 引入 jwt 模块
     JwtModule.register({
       global: true,
-      secret: 'secret',
+      secret: jwtConstants.secret,
       signOptions: {
         expiresIn: '1h',
       },
@@ -399,7 +399,17 @@ import { JwtModule } from '@nestjs/jwt';
 })
 export class AuthModule {}
 
+
 ```
+
+然后在 constants.ts 中定义一个 secret 常量：
+
+```ts
+export const jwtConstants = {
+  secret: 'secretKey',
+};
+```
+
 
 接下来，我们就可以在 AuthService 中使用 jwt 模块了：
 
