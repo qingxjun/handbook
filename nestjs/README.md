@@ -364,4 +364,74 @@ export class AuthService {
 
 然后判断密码是否一致，不一致的话，就直接抛无权限异常。
 
+## token
 
+在登录成功之后，我们需要生成一个 token，然后返回给客户端。
+
+nest 中提供了一个 jwt 模块，用于生成 token。
+
+我们可以通过 `npm i @nestjs/jwt` 来安装 jwt 模块。
+
+然后在 AuthModule 中引入 jwt 模块：
+
+```ts
+import { Module } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { AuthController } from './auth.controller';
+
+import { UserModule } from '../user/user.module';
+import { JwtModule } from '@nestjs/jwt';
+
+@Module({
+  imports: [
+    UserModule,
+    // 引入 jwt 模块
+    JwtModule.register({
+      global: true,
+      secret: 'secret',
+      signOptions: {
+        expiresIn: '1h',
+      },
+    }),
+  ],
+  controllers: [AuthController],
+  providers: [AuthService],
+})
+export class AuthModule {}
+
+```
+
+接下来，我们就可以在 AuthService 中使用 jwt 模块了：
+
+```ts
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { UserService } from '../user/user.service';
+import { LoginAuthDto } from './dto/login-auth.dto';
+import { JwtService } from '@nestjs/jwt';
+
+@Injectable()
+export class AuthService {
+  constructor(
+    private userService: UserService,
+    private jwtService: JwtService,
+  ) {}
+  async login(loginDto: LoginAuthDto) {
+    const { username, password: pass } = loginDto;
+    const user = await this.userService.findOneByUsername(username);
+    if (user?.password !== pass) {
+      throw new UnauthorizedException();
+    }
+    // 新增修改
+    const token = await this.jwtService.signAsync({
+      sub: user.id,
+      username: user.username,
+    });
+    return {
+      token,
+    };
+  }
+}
+
+```
+
+通过 jwtService 的 signAsync 方法，我们就可以生成一个 token 了。
