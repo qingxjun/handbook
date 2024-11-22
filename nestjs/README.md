@@ -445,3 +445,133 @@ export class AuthService {
 ```
 
 通过 jwtService 的 signAsync 方法，我们就可以生成一个 token 了。
+
+## 身份验证
+
+接下来，我们可以使用 JWT 来保护用户的请求了。
+
+比如：
+
+我们可以在 AuthController 中实现一下取得用户信息的接口：
+
+```ts
+// ... 省略部分代码
+
+@Controller('auth')
+export class AuthController {
+  constructor(private readonly authService: AuthService) {}
+
+  @Post('login')
+  login(@Body() loginDto: LoginAuthDto) {
+    return this.authService.login(loginDto);
+  }
+
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
+  }
+}
+
+```
+
+我们直接取 request 中的 user 数据。
+
+显然，现在 request 上是没有 user 数据的。
+
+我们只需要通过一个守卫来保护用户的请求，当用户成功登录之后，根据我们生成的 token，就可以取得用户的信息了。
+
+我们可以通过 `nest g guard modules/auth` 来创建一个 auth 守卫。
+
+```ts
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { Request } from 'express';
+
+@Injectable()
+export class AuthGuard implements CanActivate {
+  constructor(private jwtService: JwtService) {}
+
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request = context.switchToHttp().getRequest();
+    const token = this.extractTokenFromHeader(request);
+    if (!token) {
+      throw new UnauthorizedException();
+    }
+    try {
+      const user = await this.jwtService.verifyAsync(token, {
+        secret: process.env.JWT_SECRET,
+      });
+      request.user = user;
+    } catch {
+      throw new UnauthorizedException();
+    }
+    return true;
+  }
+
+  private extractTokenFromHeader(request: Request): string | undefined {
+    const [type, token] = request.headers.authorization?.split(' ') ?? [];
+    return type === 'Bearer' ? token : undefined;
+  }
+}
+```
+
+通过用户请求头中的 token，我们就可以取得用户的信息了。
+
+然后，在 AuthController 中使用一下： 
+
+```ts
+// ... 省略部分代码
+
+@Controller('auth')
+export class AuthController {
+  constructor(private readonly authService: AuthService) {}
+
+  @Post('login')
+  login(@Body() loginDto: LoginAuthDto) {
+    return this.authService.login(loginDto);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
+  }
+}
+```
+
+当用户登录之后，调用 profile 接口，就可以取得用户的信息了。
+
+我们不可能为每个接口都加上 AuthGuard 守卫，
+
+这样很麻烦，我们可以通过全局守卫来实现。
+
+## 全局守卫
+
+实现全局守卫非常简单，如下所示：
+
+```ts
+
+// ... 省略部分代码
+
+@Module({
+  // .. 省略部分代码
+  providers: [
+    AuthService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
+})
+export class AuthModule {}
+```
+
+如此一来，所有接口都被 AuthGuard 守卫保护了。
+
+
+
