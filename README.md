@@ -2,6 +2,10 @@
 
 # 目前
 
+## JS 基础
+
+[基础语法详解](./basic/基础语法详解.md) 
+
 ## 中台前端框架
 
 [看看](./naive-ui-admin/README.md) Naive UI Admin
