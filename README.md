@@ -8,6 +8,8 @@
 
 [DOM 操作及事件](./basic/DOM操作及事件.md)
 
+[更多高级主题](./basic/高级主题.md)
+
 ## 中台前端框架
 
 [看看](./naive-ui-admin/README.md) Naive UI Admin
