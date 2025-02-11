@@ -10,10 +10,6 @@
 
 [更多高级主题](./basic/高级主题.md)
 
-[异步编程](./basic/异步编程.md)
-
-[事件循环](./basic/事件循环.md)
-
 ## 中台前端框架
 
 [看看](./naive-ui-admin/README.md) Naive UI Admin
