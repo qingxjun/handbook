@@ -1,5 +1,5 @@
 {
   "owner": "tunie",
   "repo": "handbook",
-  "articlesPath": "/"
+  "articles": "articles.json"
 }
