@@ -1,5 +1,19 @@
 {
   "owner": "tunie",
   "repo": "handbook",
-  "articlesPath": "basic"
+  "articlesPath": "basic",
+  "group": [
+    { 
+      "name": "Basic",
+      "path": "basic"
+    },
+    {
+      "name": "AI",
+      "path": "ai"
+    },
+    {
+      "name": "Article MD",
+      "path": "article-md"
+    }
+  ]
 }
