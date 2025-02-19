@@ -1,4 +1,10 @@
 {
+  "files": [
+    {
+      "name": "测试一下",
+      "path": "basic/高级主题.md"
+    }
+  ],
   "dirs":[
     "ai",
     "basic",
