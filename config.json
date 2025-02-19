@@ -3,14 +3,17 @@
     {
       "name": "测试一下",
       "path": "basic/高级主题.md"
-    }, 
+    },
     {
       "name": "日期",
       "path": "skills/date.md"
     }
   ],
-  "dirs":[
-    "ai",
+  "dirs": [
+    {
+      "path": "ai",
+      "name": "人工智能"
+    },
     "basic",
     "article-md"
   ]
